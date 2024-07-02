@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"image/color"
 	"math/rand"
 	"strconv"
 	"time"
@@ -12,6 +11,7 @@ import (
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/layout"
+	"fyne.io/fyne/v2/theme"
 	"fyne.io/fyne/v2/widget"
 )
 
@@ -70,7 +70,7 @@ func main() {
 	window := application.NewWindow("godice - dice simulator")
 	window.Resize(fyne.NewSize(250, 300))
 
-	result = canvas.NewText("", color.White)
+	result = canvas.NewText("", theme.ForegroundColor())
 	result.TextStyle = fyne.TextStyle{Bold: true}
 	result.TextSize = 50
 	result.Refresh()
