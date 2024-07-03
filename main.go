@@ -52,6 +52,13 @@ func refreshScoreBoard() {
 	scoreBoard.Refresh()
 }
 
+func resetScoreBoard() {
+	for i := 1; i <= SIDES; i++ {
+		results[i] = 0
+	}
+	refreshScoreBoard()
+}
+
 func rollDice(animation bool) {
 	if animation {
 		for range 10 {
@@ -82,6 +89,8 @@ func main() {
 
 	scoreBoard = widget.NewRichText()
 	scoreBoard.Refresh()
+
+	resetScoreBtn := widget.NewButton("reset", resetScoreBoard)
 
 	resultAlign := container.NewHBox(layout.NewSpacer(), result, layout.NewSpacer())
 
@@ -114,7 +123,10 @@ func main() {
 
 	rollManyCont := container.NewGridWithColumns(2, rollAmount, rollMany)
 
-	mainCont := container.NewVBox(rollManyCont, rollOnce, layout.NewSpacer(), resultAlign, layout.NewSpacer(), scoreBoard)
+	vbox := container.NewVBox(scoreBoard, resetScoreBtn)
+	hbox := container.NewHBox(vbox, layout.NewSpacer(), resultAlign, layout.NewSpacer())
+
+	mainCont := container.NewVBox(rollManyCont, rollOnce, hbox)
 
 	refreshScoreBoard()
 	for i := 1; i <= SIDES; i++ {
