@@ -60,15 +60,15 @@ func rollDice(animation bool) {
 	if animation {
 		result.Text = fmt.Sprint(finalResult)
 		result.Refresh()
+		refreshScoreBoard()
 	}
 	results[finalResult]++
-	refreshScoreBoard()
 }
 
 func main() {
 	application := app.New()
 	window := application.NewWindow("godice - dice simulator")
-	window.Resize(fyne.NewSize(250, 300))
+	window.Resize(fyne.NewSize(350, 350))
 
 	result = canvas.NewText("", theme.ForegroundColor())
 	result.TextStyle = fyne.TextStyle{Bold: true}
@@ -93,10 +93,19 @@ func main() {
 		if err != nil {
 			result.Text = "NaN"
 			result.Refresh()
+			return
 		}
+
+		if amount > 100000000 {
+			result.Text = "max 100mln"
+			result.Refresh()
+			return
+		}
+
 		for i := 0; i < amount; i++ {
 			rollDice(false)
 		}
+		refreshScoreBoard()
 
 		result.Text = "Done"
 		result.Refresh()
