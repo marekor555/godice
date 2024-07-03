@@ -110,6 +110,7 @@ func main() {
 	})
 
 	rollAmount = widget.NewSelect(rollAmounts, func(s string) {})
+	rollAmount.SetSelected(rollAmounts[0])
 
 	rollManyCont := container.NewGridWithColumns(2, rollAmount, rollMany)
 
