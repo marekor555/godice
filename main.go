@@ -23,7 +23,7 @@ var (
 	results     = map[int]int{}
 	scoreBoard  *widget.RichText
 	result      *canvas.Text
-	rollAmount  *widget.SelectEntry
+	rollAmount  *widget.Select
 	rollAmounts = []string{
 		"10",
 		"50",
@@ -34,6 +34,9 @@ var (
 		"10000",
 		"50000",
 		"100000",
+		"500000",
+		"1000000",
+		"5000000",
 	}
 )
 
@@ -85,22 +88,14 @@ func main() {
 	})
 
 	rollMany := widget.NewButton("roll the amount", func() {
-		amount, err := strconv.Atoi(rollAmount.Text)
-
+		amount, err := strconv.Atoi(rollAmount.Selected)
+		if err != nil {
+			result.Text = err.Error()
+			result.Refresh()
+			return
+		}
 		result.Text = "Calculating..."
 		result.Refresh()
-
-		if err != nil {
-			result.Text = "NaN"
-			result.Refresh()
-			return
-		}
-
-		if amount > 100000000 {
-			result.Text = "max 100mln"
-			result.Refresh()
-			return
-		}
 
 		for i := 0; i < amount; i++ {
 			rollDice(false)
@@ -112,8 +107,7 @@ func main() {
 
 	})
 
-	rollAmount = widget.NewSelectEntry(rollAmounts)
-	rollAmount.SetText(rollAmounts[0])
+	rollAmount = widget.NewSelect(rollAmounts, func(s string) {})
 
 	rollManyCont := container.NewGridWithColumns(2, rollAmount, rollMany)
 
