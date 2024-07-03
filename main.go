@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"math/rand"
+	"os"
 	"strconv"
 	"time"
 
@@ -69,6 +70,7 @@ func rollDice(animation bool) {
 }
 
 func main() {
+	os.Setenv("FYNE_THEME", "dark")
 	application := app.New()
 	window := application.NewWindow("godice - dice simulator")
 	window.Resize(fyne.NewSize(350, 350))
