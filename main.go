@@ -124,9 +124,8 @@ func main() {
 	rollManyCont := container.NewGridWithColumns(2, rollAmount, rollMany)
 
 	vbox := container.NewVBox(scoreBoard, resetScoreBtn)
-	hbox := container.NewHBox(vbox, layout.NewSpacer(), resultAlign, layout.NewSpacer())
 
-	mainCont := container.NewVBox(rollManyCont, rollOnce, hbox)
+	mainCont := container.NewVBox(rollManyCont, rollOnce, layout.NewSpacer(), resultAlign, layout.NewSpacer(), vbox)
 
 	refreshScoreBoard()
 	for i := 1; i <= SIDES; i++ {
