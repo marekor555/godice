@@ -87,8 +87,8 @@ func main() {
 			finalResult := rand.Intn(SIDES) + 1
 			result.Text = fmt.Sprint(finalResult)
 			result.Refresh()
-			refreshScoreBoard()
 			results[finalResult]++
+			refreshScoreBoard()
 		}()
 	})
 
