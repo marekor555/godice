@@ -59,23 +59,6 @@ func resetScoreBoard() {
 	refreshScoreBoard()
 }
 
-func rollDice(animation bool) {
-	if animation {
-		for range 10 {
-			result.Text = fmt.Sprint(rand.Intn(SIDES) + 1)
-			result.Refresh()
-			time.Sleep(time.Millisecond * 20)
-		}
-	}
-	finalResult := rand.Intn(SIDES) + 1
-	if animation {
-		result.Text = fmt.Sprint(finalResult)
-		result.Refresh()
-		refreshScoreBoard()
-	}
-	results[finalResult]++
-}
-
 func main() {
 	os.Setenv("FYNE_THEME", "dark")
 	application := app.New()
@@ -95,7 +78,18 @@ func main() {
 	resultAlign := container.NewHBox(layout.NewSpacer(), result, layout.NewSpacer())
 
 	rollOnce := widget.NewButton("roll the dice", func() {
-		go rollDice(true)
+		go func() {
+			for range 10 {
+				result.Text = fmt.Sprint(rand.Intn(SIDES) + 1)
+				result.Refresh()
+				time.Sleep(time.Millisecond * 20)
+			}
+			finalResult := rand.Intn(SIDES) + 1
+			result.Text = fmt.Sprint(finalResult)
+			result.Refresh()
+			refreshScoreBoard()
+			results[finalResult]++
+		}()
 	})
 
 	rollMany := widget.NewButton("roll the amount", func() {
@@ -109,7 +103,7 @@ func main() {
 		result.Refresh()
 
 		for i := 0; i < amount; i++ {
-			rollDice(false)
+			results[rand.Intn(SIDES)+1]++
 		}
 		refreshScoreBoard()
 
