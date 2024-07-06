@@ -1,7 +1,13 @@
+#release files
 godice
 godice.apk
 godice.tar.xz
 godice.exe
+godice.aab
 
+#build files
 tmp-pkg
 fyne-cross
+
+#secrets
+keystore.jks
